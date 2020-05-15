@@ -61,10 +61,11 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    ''
+    'mongodb+srv://pandey1:pandey21197@cluster0-hzp7e.mongodb.net/store?retryWrites=true&w=majority'
   )
   .then(result => {
     const server = app.listen(8080);
+    console.log('connected to port no. 8080');
     const io = require('./socket').init(server);
     io.on('connection', socket => {
       console.log('Client connected');
