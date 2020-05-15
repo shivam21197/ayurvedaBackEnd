@@ -43,7 +43,7 @@ exports.findStoresByItem = async (req, res, next) => {
     let stores = [];
   if(searchQuery) {
     stores = await Store.aggregate([
-      {$match: {'items.name': searchQuery}}
+      {$match: {'items.name': searchQuery.toLowerCase()}}
     ]);
   }
   
