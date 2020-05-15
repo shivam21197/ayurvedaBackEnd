@@ -5,8 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 
-const feedRoutes = require('./routes/feed');
-const authRoutes = require('./routes/auth');
+const storeRoutes = require('./routes/store');
 
 const app = express();
 
@@ -31,7 +30,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
+app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
@@ -48,8 +47,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/feed', feedRoutes);
-app.use('/auth', authRoutes);
+app.use('/store', storeRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
@@ -61,14 +59,10 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://pandey1:pandey21197@cluster0-hzp7e.mongodb.net/store?retryWrites=true&w=majority'
+    'mongodb+srv://pandey1:pandey21197@cluster0-hzp7e.mongodb.net/findStore?retryWrites=true&w=majority'
   )
   .then(result => {
-    const server = app.listen(8080);
+    app.listen(8080);
     console.log('connected to port no. 8080');
-    const io = require('./socket').init(server);
-    io.on('connection', socket => {
-      console.log('Client connected');
-    });
   })
   .catch(err => console.log(err));
