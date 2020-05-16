@@ -16,12 +16,15 @@ const error = (message, code = 500) => {
 };
 
 exports.getStores = async (req, res, next) => {
-  const {pin, location} = req.query;
+  const {pin, location, storeType} = req.query;
 
   try {
     let stores = [];
   if(pin && !location) {
-    stores = await Store.find();
+    stores = await Store.find({pin});
+  }
+  if(pin && !location && storeType) {
+    stores = await Store.find({pin, storeType: storeType.toLowerCase()});
   }
   else if(pin && location) {
     stores = await Store.find({pin, location})
