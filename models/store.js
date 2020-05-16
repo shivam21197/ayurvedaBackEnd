@@ -31,9 +31,24 @@ const item = {
   }
 }
 
+const zoneThreshHold = {
+  orange: String,
+  red: String,
+}
+
+const timeSlot = {
+    zone: String,
+    slot: String,
+    slotMeridiem: String,
+    slotCount: Number
+}
 const storeSchema = new Schema(
   {
     storeType: {
+      type: String,
+      required: true
+    },
+    storeName: {
       type: String,
       required: true
     },
@@ -65,17 +80,13 @@ const storeSchema = new Schema(
       type: Number,
       required: true
     },
-    filledSlots: {
-      type: Number,
-      required: true
+    zoneThreshHold: {
+      type: [zoneThreshHold],
+      required: true,
     },
-    timeSlot: {
-      type: String,
-      required: true
-    },
-    timeMeridiem: {
-      type: String,
-      required: true
+    timeSlots: {
+      type: [timeSlot],
+      required: true,
     },
     items: {
       type: [item],

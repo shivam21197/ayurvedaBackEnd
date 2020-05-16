@@ -54,5 +54,5 @@ exports.findStoresByItem = async (req, res, next) => {
       }
       next(err);
 }
-  
+
 };
